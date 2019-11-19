@@ -3,7 +3,6 @@ package org.springframework.boot.autoconfigure.klock.test;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.klock.handler.KlockTimeoutException;
 import org.springframework.boot.test.context.SpringBootTest;

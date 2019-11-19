@@ -7,8 +7,10 @@ import org.springframework.boot.autoconfigure.klock.annotation.Klock;
 import org.springframework.boot.autoconfigure.klock.annotation.KlockKey;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.DefaultParameterNameDiscoverer;
+import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
@@ -30,6 +32,10 @@ public class BusinessKeyProvider {
     private ExpressionParser parser = new SpelExpressionParser();
 
     public String getKeyName(JoinPoint joinPoint, Klock klock) {
+//        String[] parameterNames = new LocalVariableTableParameterNameDiscoverer().getParameterNames(((MethodSignature) joinPoint.getSignature()).getMethod());
+//        Object[] args = joinPoint.getArgs();
+//        System.out.println(parameterNames);
+//        System.out.println(args);
         List<String> keyList = new ArrayList<>();
         Method method = getMethod(joinPoint);
         List<String> definitionKeys = getSpelDefinitionKey(klock.keys(), method, joinPoint.getArgs());
@@ -37,6 +43,7 @@ public class BusinessKeyProvider {
         List<String> parameterKeys = getParameterKey(method.getParameters(), joinPoint.getArgs());
         keyList.addAll(parameterKeys);
         return StringUtils.collectionToDelimitedString(keyList,"","-","");
+//        return getVauleBySpel(klock.name(),parameterNames,args);
     }
 
     private Method getMethod(JoinPoint joinPoint) {
@@ -52,7 +59,28 @@ public class BusinessKeyProvider {
         }
         return method;
     }
-
+    /**
+     * 通过spring Spel 获取参数
+     * @param key               定义的key值 以#开头 例如:#user
+     * @param parameterNames    形参
+     * @param values             形参值
+     * @return
+     */
+    public String getVauleBySpel(String key, String[] parameterNames, Object[] values) {
+        if(!key.contains("#")){
+            return key;
+        }
+        //spel解析器
+        ExpressionParser parser = new SpelExpressionParser();
+        //spel上下文
+        EvaluationContext context = new StandardEvaluationContext();
+        for (int i = 0; i < parameterNames.length; i++) {
+            context.setVariable(parameterNames[i], values[i]);
+        }
+        Expression expression = parser.parseExpression(key);
+        Object value = expression.getValue(context);
+        return value.toString();
+    }
     private List<String> getSpelDefinitionKey(String[] definitionKeys, Method method, Object[] parameterValues) {
         List<String> definitionKeyList = new ArrayList<>();
         for (String definitionKey : definitionKeys) {

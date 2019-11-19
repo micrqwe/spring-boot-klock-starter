@@ -12,7 +12,7 @@ public class KlockConfig {
     //redisson
     private String address;
     private String password;
-    private int database=15;
+    private int database=0;
     private ClusterServer clusterServer;
     private String codec = "org.redisson.codec.JsonJacksonCodec";
     //lock
@@ -80,9 +80,15 @@ public class KlockConfig {
         private String[] nodeAddresses;
 
         public String[] getNodeAddresses() {
+
             return nodeAddresses;
         }
-
+        public String[] toRedisNodeAddresses(){
+            for (int i = 0; i < nodeAddresses.length; i++) {
+                nodeAddresses[i] =  "redis://"+nodeAddresses[i];
+            }
+            return nodeAddresses;
+        }
         public void setNodeAddresses(String[] nodeAddresses) {
             this.nodeAddresses = nodeAddresses;
         }
