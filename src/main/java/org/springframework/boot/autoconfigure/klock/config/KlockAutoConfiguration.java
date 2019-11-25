@@ -49,6 +49,13 @@ public class KlockAutoConfiguration {
             if (!StringUtils.isEmpty(klockConfig.getPassword())) {
                 clusterServersConfig.setPassword(klockConfig.getPassword());
             }
+          /*  clusterServersConfig.setMasterConnectionPoolSize(64);//设置对于master节点的连接池中连接数最大为500
+            clusterServersConfig.setSlaveConnectionPoolSize(64);//设置对于slave节点的连接池中连接数最大为500
+            clusterServersConfig.setIdleConnectionTimeout(10000);//如果当前连接池里的连接数量超过了最小空闲连接数，而同时有连接空闲时间超过了该数值，那么这些连接将会自动被关闭，并从连接池里去掉。时间单位是毫秒。
+            clusterServersConfig.setConnectTimeout(30000);//同任何节点建立连接时的等待超时。时间单位是毫秒。
+            clusterServersConfig.setTimeout(3000);//等待节点回复命令的时间。该时间从命令发送成功时开始计时。
+            clusterServersConfig.setPingTimeout(1000);
+            clusterServersConfig.setReconnectionTimeout(3000);//当与某个节点的连接断开时，等待与其重新建立连接的时间间隔。时间单位是毫秒。*/
         } else {
             SingleServerConfig serverConfig = config.useSingleServer();
             serverConfig.setAddress(klockConfig.getAddress());
@@ -59,7 +66,6 @@ public class KlockAutoConfiguration {
                 serverConfig.setPassword(klockConfig.getPassword());
             }
         }
-
         // 添加解码器
         Codec codec = (Codec) ClassUtils.forName(klockConfig.getCodec(), ClassUtils.getDefaultClassLoader()).newInstance();
         config.setCodec(codec);
