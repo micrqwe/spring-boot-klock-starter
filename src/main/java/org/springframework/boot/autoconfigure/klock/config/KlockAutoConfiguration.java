@@ -67,9 +67,9 @@ public class KlockAutoConfiguration {
             }
         }
         // 添加解码器
-        Codec codec = (Codec) ClassUtils.forName(klockConfig.getCodec(), ClassUtils.getDefaultClassLoader()).newInstance();
-        config.setCodec(codec);
-        config.setEventLoopGroup(new NioEventLoopGroup());
+//        Codec codec = (Codec) ClassUtils.forName(klockConfig.getCodec(), ClassUtils.getDefaultClassLoader()).newInstance();
+//        config.setCodec(codec);
+//        config.setEventLoopGroup(new NioEventLoopGroup());
         return Redisson.create(config);
     }
 

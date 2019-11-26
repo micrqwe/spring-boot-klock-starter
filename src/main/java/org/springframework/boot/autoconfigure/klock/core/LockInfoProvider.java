@@ -31,7 +31,7 @@ public class LockInfoProvider {
     LockInfo get(JoinPoint joinPoint, Klock klock) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         LockType type= klock.lockType();
-        String businessKeyName=businessKeyProvider.getKeyName(joinPoint,klock);
+        String businessKeyName= businessKeyProvider.getKeyName(joinPoint,klock);
         //锁的名字，锁的粒度就是这里控制的
         String lockName = LOCK_NAME_PREFIX + LOCK_NAME_SEPARATOR + getName(klock.name(), signature) + businessKeyName;
         long waitTime = getWaitTime(klock);

@@ -29,7 +29,7 @@ public @interface Klock {
      */
     LockType lockType() default LockType.Reentrant;
     /**
-     * 尝试加锁，最多等待时间
+     * 尝试加锁，最多等待时间，单位秒
      * @return waitTime
      */
     long waitTime() default Long.MIN_VALUE;
