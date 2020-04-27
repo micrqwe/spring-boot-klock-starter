@@ -34,8 +34,6 @@ public class BusinessKeyProvider {
     public String getKeyName(JoinPoint joinPoint, Klock klock) {
 //        String[] parameterNames = new LocalVariableTableParameterNameDiscoverer().getParameterNames(((MethodSignature) joinPoint.getSignature()).getMethod());
 //        Object[] args = joinPoint.getArgs();
-//        System.out.println(parameterNames);
-//        System.out.println(args);
         List<String> keyList = new ArrayList<>();
         Method method = getMethod(joinPoint);
         List<String> definitionKeys = getSpelDefinitionKey(klock.keys(), method, joinPoint.getArgs());
@@ -43,7 +41,6 @@ public class BusinessKeyProvider {
         List<String> parameterKeys = getParameterKey(method.getParameters(), joinPoint.getArgs());
         keyList.addAll(parameterKeys);
         return StringUtils.collectionToDelimitedString(keyList,"","-","");
-//        return getVauleBySpel(klock.name(),parameterNames,args);
     }
 
     private Method getMethod(JoinPoint joinPoint) {
