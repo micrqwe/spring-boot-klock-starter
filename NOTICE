@@ -8,5 +8,16 @@ This product contains code form the spring-boot-klock-starter Project:
 
 The spring-boot-klock-starter Project
 =================
-Please visit the Netty web site for more information:
+Please visit the spring-boot-klock-starter web site for more information:
   * https://github.com/kekingcn/spring-boot-klock-starter
+
+include spring
+=================
+Please visit the srping web site for more information:
+  * https://github.com/spring-projects/spring-boot/blob/master/LICENSE.txt
+
+
+include redisson
+=================
+Please visit the redisson web site for more information:
+  * https://github.com/redisson/redisson/blob/master/LICENSE.txt
